@@ -1,0 +1,31 @@
+name: dbt_erits
+version: "1.0"
+profile: erits
+
+model-paths: ["models"]
+analysis-paths: ["analysis"]
+seed-paths: ["seeds"]
+macro-paths: ["macros"]
+test-paths: ["tests"]
+target-path: "target"
+clean-targets: ["target", "dbt_modules"]
+
+models:
+  dbt_erits:
+    staging:
+      +schema: "Silver"
+      +materialized: table
+      
+      preparation:
+        +materialized: table
+    
+      gen_uuid_and_linking:
+        +materialized: table
+      
+      interest:
+        +schema: "Silver"
+        +materialized: table
+    marts:
+      +schema: "gold"
+      +materialized: table  
+    
