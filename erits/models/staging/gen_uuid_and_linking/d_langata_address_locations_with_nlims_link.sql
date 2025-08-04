@@ -20,7 +20,8 @@ joined as (
         cadastre.uuid
     from layer
     left join cadastre
-    on ST_Intersects(layer.geom, cadastre.geom)
+    on  cadastre.geom && layer.geom
+    and ST_Intersects(layer.geom, cadastre.geom)
 )
 
 select *
