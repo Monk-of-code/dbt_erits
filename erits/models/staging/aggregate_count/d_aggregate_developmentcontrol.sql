@@ -3,7 +3,8 @@
     materialized='table',
     post_hook=[
         "CREATE INDEX IF NOT EXISTS idx_d_langata_aggregate_development ON {{ this }} USING GIST (geom)",
-        "CREATE INDEX IF NOT EXISTS idx_d_langata_aggregate_development_uuid ON {{ this }} (uuid)"
+        "CREATE INDEX IF NOT EXISTS idx_d_langata_aggregate_development_uuid ON {{ this }} (uuid)",
+        "ANALYZE {{ this }}"
     ]
 )}}
 

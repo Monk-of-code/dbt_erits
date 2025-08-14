@@ -2,7 +2,8 @@
     schema='Silver',
     materialized='table',
     post_hook=[
-        "CREATE INDEX IF NOT EXISTS idx_d_langata_building_permits_geom ON {{ this }} USING GIST (geom)"
+        "CREATE INDEX IF NOT EXISTS idx_d_langata_building_permits_geom ON {{ this }} USING GIST (geom)",
+        "ANALYZE {{ this }}"
     ]
 )}}
 

@@ -3,7 +3,8 @@
     materialized='table',
     post_hook=[
         "CREATE INDEX IF NOT EXISTS idx_join_fields_geom ON {{ this }} USING GIST (geom)",
-        "CREATE INDEX IF NOT EXISTS idx_join_fields_uuid ON {{ this }} (uuid)"
+        "CREATE INDEX IF NOT EXISTS idx_join_fields_uuid ON {{ this }} (uuid)",
+        "ANALYZE {{ this }}"
     ]
 ) }}
 

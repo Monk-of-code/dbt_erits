@@ -2,7 +2,9 @@
     materialized='table',
     schema='Silver',
     post_hook=[
-        "CREATE INDEX IF NOT EXISTS idx_landrates_uuid ON {{ this }} (uuid)"
+        "CREATE INDEX IF NOT EXISTS idx_landrates_uuid ON {{ this }} (uuid)",
+        "CREATE INDEX IF NOT EXISTS idx_landrates_geom ON {{ this }} USING GIST (geom)",
+        "ANALYZE {{ this }}"
     ]
 ) }}
 
