@@ -14,18 +14,28 @@ models:
   dbt_erits:
     staging:
       +schema: "Silver"
-      +materialized: table
+      +materialized: incremental
+      +unique_key: uuid
+      +on_schema_change: sync_all_columns
       
       preparation:
-        +materialized: table
-    
+        +materialized: incremental
+        +unique_key: uuid
+        
       gen_uuid_and_linking:
-        +materialized: table
-      
+        +materialized: incremental
+        +unique_key: uuid
+        
+      aggregate_count:
+        +materialized: incremental
+        +unique_key: uuid
+        
       interest:
-        +schema: "Silver"
-        +materialized: table
+        +materialized: incremental
+        +unique_key: uuid
+        
     marts:
       +schema: "gold"
-      +materialized: table  
+      +materialized: incremental
+      +unique_key: uuid  
     

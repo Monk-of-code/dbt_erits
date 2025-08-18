@@ -1,6 +1,7 @@
+{{ incremental_config('id') }}
+
 {{ config(
     schema = 'Silver',
-    materialized = 'table',
     post_hook=[
         "CREATE INDEX IF NOT EXISTS idx_d_langata_buildings_nlims_geom ON {{ this }} USING GIST (geom)",
         "CREATE INDEX IF NOT EXISTS idx_d_langata_buildings_nlims_uuid ON {{ this }} (uuid)",
@@ -9,11 +10,13 @@
 ) }}
 
 with layer as (
-    select * from {{ ref('d_langata_buildings') }}
+    {{ incremental_filter(ref("d_langata_buildings"), 'id', strategy='insert_only') }}
 ),
+
 cadastre as (
     select uuid, geom from {{ ref('d_langata_cp_cadastral_parcel_uuid') }}
 ),
+
 joined as (
     select 
         layer.*, 

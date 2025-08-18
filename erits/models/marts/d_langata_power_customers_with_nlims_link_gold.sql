@@ -1,15 +1,17 @@
-{{config(
-    schema = 'gold',
-    materialized = 'table',
+{{ incremental_config('uuid') }}
+
+{{ config(
+    schema='gold',
     post_hook=[
-        "CREATE INDEX IF NOT EXISTS idx_d_langata_powercustomersgold_uuid ON {{ this }} (uuid)",
-        "CREATE INDEX IF NOT EXISTS idx_d_langata_powercustomersgold_geom ON {{ this }} USING GIST (geom)"
+        "CREATE INDEX IF NOT EXISTS idx_d_langata_power_customers_gold_uuid ON {{ this }} (uuid)",
+        "CREATE INDEX IF NOT EXISTS idx_d_langata_power_customers_gold_geom ON {{ this }} USING GIST (geom)",
+        "ANALYZE {{ this }}"
     ]
 ) }}
 
 with base as (
-    select *
-    from {{ ref('d_langata_power_customers_with_nlims_link') }}
+    {{ incremental_filter(ref('d_langata_power_customers_with_nlims_link'), 'uuid', strategy='upsert') }}
 )
 
-select * from base
+select *
+from base

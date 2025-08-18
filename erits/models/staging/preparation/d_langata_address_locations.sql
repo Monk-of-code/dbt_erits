@@ -1,29 +1,30 @@
-{{config(
-    schema='Silver',
-    materialized='table',
+{{ incremental_config('id') }}
+
+{{ config(
+    schema = 'Silver',
     post_hook=[
         "CREATE INDEX IF NOT EXISTS idx_d_langata_address_locations_geom ON {{ this }} USING GIST (geom)",
-        "ANALYZE {{ this }};"  
+        "CREATE INDEX IF NOT EXISTS idx_d_langata_address_locations_id ON {{ this }} (id)",
+        "ANALYZE {{ this }}"
     ]
-)}}
+) }}
 
-WITH permits AS(
-    SELECT *
-    FROM {{source ('bronze_source','address')}}
+with addresses as (
+    {{ incremental_filter(source('bronze_source', 'address'), 'id', strategy='upsert') }}
 ),
 
-subcounty AS (
-    SELECT *
-    FROM {{ref('d_langata_au_subcounty_unit')}}
+subcounty as (
+    select *
+    from {{ ref('d_langata_au_subcounty_unit') }}
 ),
 
-joined AS (
-    SELECT 
-    p. *
-    FROM permits p
-    JOIN subcounty s
-      ON ST_Intersects(p.geom,s.geom)
+joined as (
+    select 
+        a.*
+    from addresses a
+    join subcounty s
+      on ST_Intersects(a.geom, s.geom)
 )
 
-SELECT * 
-FROM joined
+select * 
+from joined

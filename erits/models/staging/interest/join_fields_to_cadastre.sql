@@ -1,6 +1,7 @@
+{{ incremental_config('uuid') }}
+
 {{ config(
     schema='Silver',
-    materialized='table',
     post_hook=[
         "CREATE INDEX IF NOT EXISTS idx_join_fields_geom ON {{ this }} USING GIST (geom)",
         "CREATE INDEX IF NOT EXISTS idx_join_fields_uuid ON {{ this }} (uuid)",
@@ -9,14 +10,10 @@
 ) }}
 
 with cadastre as (
-
-    select distinct ON (uuid) *
-    from {{ ref('d_langata_add_trade_license_count_to_join_cadastre') }}
-
+    {{ incremental_filter(ref('d_langata_potential_interests_to_land'), 'uuid', strategy='merge')}}
 ),
 
 land_rate as (
-
     select
         uuid_derived as uuid,
         "LRNumber" as "BL_LRNumber",
@@ -30,11 +27,9 @@ land_rate as (
         "Property Value" as "BL_PropertyValue",
         uuid_derived as "BL_uuid_derived"
     from {{ source('bronze_source', 'bd_land_rate_data') }}
-
 ),
 
 joined as (
-
     select
         c.*,
         l."BL_LRNumber",
@@ -50,11 +45,9 @@ joined as (
     from cadastre c
     left join land_rate l
     on c.uuid = l.uuid
-
 ),
 
 final as (
-
     select
         geom, fr_number, rim_name, lr_number, parcel_number, sheet_number, stated_area,
         area_type, comments, null_comment, reg_block, block_name, bound_type, feature_type,
@@ -65,7 +58,6 @@ final as (
         "BL_CustomerID", "BL_PhoneNumber", "BL_PropertyValue", "BL_uuid_derived", fusion, 
         property_names, rates_count, trade_count
     from joined
-
 )
 
 select distinct on (uuid) *

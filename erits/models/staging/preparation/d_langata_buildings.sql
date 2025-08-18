@@ -1,15 +1,16 @@
+{{ incremental_config('id') }}
+
 {{config(
     schema='Silver',
-    materialized='table',
     post_hook=[
         "CREATE INDEX IF NOT EXISTS idx_d_langata_buildings_geom ON {{ this }} USING GIST (geom)",
+        "CREATE INDEX IF NOT EXISTS idx_d_langata_buildings_fid ON {{ this }} (id)",
         "ANALYZE {{ this }}"
     ]
 )}}
 
 WITH buildings AS (
-    SELECT *
-    FROM {{ source('bronze_source', 'buildings_183') }}
+    {{ incremental_filter(source('bronze_source', 'buildings_183'), 'id', strategy='merge') }}
 ),
 
 subcounty AS (

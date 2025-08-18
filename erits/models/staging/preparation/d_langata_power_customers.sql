@@ -1,15 +1,16 @@
+{{incremental_config('fid') }}
+
 {{ config(
     schema='Silver',
-    materialized='table',
     post_hook=[
         "CREATE INDEX IF NOT EXISTS idx_d_langata_power_customers_geom ON {{ this }} USING GIST (geom)",
+        "CREATE INDEX IF NOT EXISTS idx_d_langata_power_customers_fid ON {{ this }} (fid)",
         "ANALYZE {{ this }}"
     ]
 ) }}
 
 with power as (
-    select *
-    from {{ source('bronze_source', 'power_customers') }}
+    {{ incremental_filter(source('bronze_source','power_customers'), 'fid', strategy='merge') }}
 ),
 
 subcounty as (

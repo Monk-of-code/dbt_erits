@@ -73,3 +73,74 @@ Runtime Error
 [0m17:32:00.357251 [debug] [MainThread]: Command `dbt debug` failed at 17:32:00.357147 after 0.25 seconds
 [0m17:32:00.357625 [debug] [MainThread]: Connection 'debug' was properly closed.
 [0m17:32:00.357967 [debug] [MainThread]: Flushing usage events
+[0m15:30:42.298881 [debug] [MainThread]: Got an exception trying to initialize tracking
+
+
+============================== 15:30:42.305596 | ea8ddf50-125a-4b4d-8125-9f179d3054be ==============================
+[0m15:30:42.305596 [info ] [MainThread]: Running with dbt=1.10.5
+[0m15:30:42.306257 [debug] [MainThread]: running dbt with arguments {'printer_width': '80', 'indirect_selection': 'eager', 'write_json': 'True', 'log_cache_events': 'False', 'partial_parse': 'True', 'cache_selected_only': 'False', 'profiles_dir': '/home/grizzly/.dbt', 'fail_fast': 'False', 'version_check': 'True', 'log_path': 'logs', 'warn_error': 'None', 'debug': 'False', 'use_colors': 'True', 'use_experimental_parser': 'False', 'no_print': 'None', 'quiet': 'False', 'empty': 'None', 'log_format': 'default', 'invocation_command': 'dbt debug', 'introspect': 'True', 'static_parser': 'True', 'target_path': 'None', 'warn_error_options': 'WarnErrorOptionsV2(error=[], warn=[], silence=[])', 'send_anonymous_usage_stats': 'True'}
+[0m15:30:42.315339 [info ] [MainThread]: dbt version: 1.10.5
+[0m15:30:42.315811 [info ] [MainThread]: python version: 3.12.3
+[0m15:30:42.316208 [info ] [MainThread]: python path: /data/dbt_erits/venv/bin/python3
+[0m15:30:42.316620 [info ] [MainThread]: os info: Linux-6.14.0-27-generic-x86_64-with-glibc2.39
+[0m15:30:42.380237 [info ] [MainThread]: Using profiles dir at /home/grizzly/.dbt
+[0m15:30:42.380874 [info ] [MainThread]: Using profiles.yml file at /home/grizzly/.dbt/profiles.yml
+[0m15:30:42.381366 [info ] [MainThread]: Using dbt_project.yml file at /data/dbt_erits/dbt_project.yml
+[0m15:30:42.382029 [info ] [MainThread]: adapter type: postgres
+[0m15:30:42.382452 [info ] [MainThread]: adapter version: 1.9.0
+[0m15:30:42.382914 [info ] [MainThread]: Configuration:
+[0m15:30:42.383296 [info ] [MainThread]:   profiles.yml file [[32mOK found and valid[0m]
+[0m15:30:42.383728 [info ] [MainThread]:   dbt_project.yml file [[31mERROR not found[0m]
+[0m15:30:42.384174 [info ] [MainThread]: Required dependencies:
+[0m15:30:42.384757 [debug] [MainThread]: Executing "git --help"
+[0m15:30:42.388916 [debug] [MainThread]: STDOUT: "b"usage: git [-v | --version] [-h | --help] [-C <path>] [-c <name>=<value>]\n           [--exec-path[=<path>]] [--html-path] [--man-path] [--info-path]\n           [-p | --paginate | -P | --no-pager] [--no-replace-objects] [--bare]\n           [--git-dir=<path>] [--work-tree=<path>] [--namespace=<name>]\n           [--config-env=<name>=<envvar>] <command> [<args>]\n\nThese are common Git commands used in various situations:\n\nstart a working area (see also: git help tutorial)\n   clone     Clone a repository into a new directory\n   init      Create an empty Git repository or reinitialize an existing one\n\nwork on the current change (see also: git help everyday)\n   add       Add file contents to the index\n   mv        Move or rename a file, a directory, or a symlink\n   restore   Restore working tree files\n   rm        Remove files from the working tree and from the index\n\nexamine the history and state (see also: git help revisions)\n   bisect    Use binary search to find the commit that introduced a bug\n   diff      Show changes between commits, commit and working tree, etc\n   grep      Print lines matching a pattern\n   log       Show commit logs\n   show      Show various types of objects\n   status    Show the working tree status\n\ngrow, mark and tweak your common history\n   branch    List, create, or delete branches\n   commit    Record changes to the repository\n   merge     Join two or more development histories together\n   rebase    Reapply commits on top of another base tip\n   reset     Reset current HEAD to the specified state\n   switch    Switch branches\n   tag       Create, list, delete or verify a tag object signed with GPG\n\ncollaborate (see also: git help workflows)\n   fetch     Download objects and refs from another repository\n   pull      Fetch from and integrate with another repository or a local branch\n   push      Update remote refs along with associated objects\n\n'git help -a' and 'git help -g' list available subcommands and some\nconcept guides. See 'git help <command>' or 'git help <concept>'\nto read about a specific subcommand or concept.\nSee 'git help git' for an overview of the system.\n""
+[0m15:30:42.389425 [debug] [MainThread]: STDERR: "b''"
+[0m15:30:42.389815 [info ] [MainThread]:  - git [[32mOK found[0m]
+
+[0m15:30:42.390212 [info ] [MainThread]: Connection:
+[0m15:30:42.390633 [info ] [MainThread]:   host: localhost
+[0m15:30:42.391019 [info ] [MainThread]:   port: 5433
+[0m15:30:42.391498 [info ] [MainThread]:   user: postgres
+[0m15:30:42.392052 [info ] [MainThread]:   database: erits
+[0m15:30:42.392504 [info ] [MainThread]:   schema: Bronze
+[0m15:30:42.392928 [info ] [MainThread]:   connect_timeout: 10
+[0m15:30:42.393331 [info ] [MainThread]:   role: None
+[0m15:30:42.393757 [info ] [MainThread]:   search_path: None
+[0m15:30:42.394155 [info ] [MainThread]:   keepalives_idle: 0
+[0m15:30:42.394550 [info ] [MainThread]:   sslmode: None
+[0m15:30:42.395163 [info ] [MainThread]:   sslcert: None
+[0m15:30:42.395801 [info ] [MainThread]:   sslkey: None
+[0m15:30:42.396551 [info ] [MainThread]:   sslrootcert: None
+[0m15:30:42.397014 [info ] [MainThread]:   application_name: dbt
+[0m15:30:42.397399 [info ] [MainThread]:   retries: 1
+[0m15:30:42.397939 [info ] [MainThread]: Registered adapter: postgres=1.9.0
+[0m15:30:42.474231 [debug] [MainThread]: Acquiring new postgres connection 'debug'
+[0m15:30:42.502712 [debug] [MainThread]: Using postgres connection "debug"
+[0m15:30:42.503172 [debug] [MainThread]: On debug: select 1 as id
+[0m15:30:42.503686 [debug] [MainThread]: Opening a new connection, currently in state init
+[0m15:30:42.515042 [debug] [MainThread]: SQL status: SELECT 1 in 0.011 seconds
+[0m15:30:42.516198 [debug] [MainThread]: On debug: Close
+[0m15:30:42.516752 [info ] [MainThread]:   Connection test: [[32mOK connection ok[0m]
+
+[0m15:30:42.517183 [info ] [MainThread]: [31m1 check failed:[0m
+[0m15:30:42.517755 [info ] [MainThread]: Project loading failed for the following reason:
+ project path </data/dbt_erits/dbt_project.yml> not found
+
+[0m15:30:42.518887 [debug] [MainThread]: Resource report: {"command_name": "debug", "command_success": false, "command_wall_clock_time": 0.2773037, "process_in_blocks": "1688", "process_kernel_time": 0.157136, "process_mem_max_rss": "112664", "process_out_blocks": "16", "process_user_time": 1.585287}
+[0m15:30:42.519742 [debug] [MainThread]: Command `dbt debug` failed at 15:30:42.519611 after 0.28 seconds
+[0m15:30:42.520376 [debug] [MainThread]: Connection 'debug' was properly closed.
+[0m15:30:42.520833 [debug] [MainThread]: Flushing usage events
+[0m20:45:48.376689 [debug] [MainThread]: Got an exception trying to initialize tracking
+
+
+============================== 20:45:48.383316 | b6fabc1e-239f-4ebe-9fb5-f8e941f6b450 ==============================
+[0m20:45:48.383316 [info ] [MainThread]: Running with dbt=1.10.5
+[0m20:45:48.384095 [debug] [MainThread]: running dbt with arguments {'printer_width': '80', 'indirect_selection': 'eager', 'log_cache_events': 'False', 'write_json': 'True', 'partial_parse': 'True', 'cache_selected_only': 'False', 'profiles_dir': '/home/grizzly/.dbt', 'debug': 'False', 'fail_fast': 'False', 'log_path': 'logs', 'version_check': 'True', 'warn_error': 'None', 'use_colors': 'True', 'use_experimental_parser': 'False', 'empty': 'False', 'quiet': 'False', 'no_print': 'None', 'log_format': 'default', 'static_parser': 'True', 'introspect': 'True', 'warn_error_options': 'WarnErrorOptionsV2(error=[], warn=[], silence=[])', 'target_path': 'None', 'invocation_command': 'dbt run --select staging.interest', 'send_anonymous_usage_stats': 'True'}
+[0m20:45:48.384731 [error] [MainThread]: Encountered an error:
+Runtime Error
+  No dbt_project.yml found at expected path /data/dbt_erits/dbt_project.yml
+  Verify that each entry within packages.yml (and their transitive dependencies) contains a file named dbt_project.yml
+  
+[0m20:45:48.386270 [debug] [MainThread]: Resource report: {"command_name": "run", "command_success": false, "command_wall_clock_time": 0.07906395, "process_in_blocks": "56992", "process_kernel_time": 0.190971, "process_mem_max_rss": "99000", "process_out_blocks": "16", "process_user_time": 1.981708}
+[0m20:45:48.386813 [debug] [MainThread]: Command `dbt run` failed at 20:45:48.386698 after 0.08 seconds
+[0m20:45:48.387199 [debug] [MainThread]: Flushing usage events

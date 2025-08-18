@@ -1,15 +1,17 @@
+{{ incremental_config('uuid') }}
+
 {{ config(
     schema='gold',
-    materialized='table',
     post_hook=[
-        "CREATE INDEX IF NOT EXISTS idx_d_langata_cp_kplc_nwsc_bldg_permits_address_uuid ON {{ this }} (uuid)",
-        "CREATE INDEX IF NOT EXISTS idx_d_langata_cp_kplc_nwsc_bldg_permits_address_geom ON {{ this }} USING GIST (geom)"
+        "CREATE INDEX IF NOT EXISTS idx_d_langata_cp_kplc_nwsc_bldg_permits_address_gold_uuid ON {{ this }} (uuid)",
+        "CREATE INDEX IF NOT EXISTS idx_d_langata_cp_kplc_nwsc_bldg_permits_address_gold_geom ON {{ this }} USING GIST (geom)",
+        "ANALYZE {{ this }}"
     ]
 ) }}
 
-WITH base AS (
-    SELECT *
-    FROM {{ ref('join_fields_to_cadastre') }}
+with base as (
+    {{ incremental_filter(ref('d_langata_cp_power_water_bld_permits_add_name'), 'uuid', strategy='merge') }}
 )
 
-SELECT * FROM base
+select *
+from base

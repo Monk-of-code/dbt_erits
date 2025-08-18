@@ -1,15 +1,16 @@
+{{ incremental_config('fid') }}
+
 {{ config(
     schema='Silver', 
-    materialized='table',
     post_hook=[
         "CREATE INDEX IF NOT EXISTS idx_d_langata_water_meters_geom ON {{ this }} USING GIST (geom)",
+        "CREATE INDEX IF NOT EXISTS idx_d_langata_water_meters_fid ON {{ this }} (fid)",
         "ANALYZE {{ this }}"
     ]
- )}}
+)}}
 
 with water as (
-    select *
-    from {{ source('bronze_source', 'water_meters') }}
+    {{ incremental_filter(source('bronze_source', 'water_meters'), 'fid', strategy='merge') }}
 ),
 
 subcounty as (
@@ -25,8 +26,5 @@ joined as (
       on ST_Intersects(w.geom, s.geom)
 )
 
-select 
-    *,
-    (SELECT COUNT(*) FROM water) as water_count,
-    (SELECT COUNT(*) FROM subcounty) as subcounty_count
+select * 
 from joined

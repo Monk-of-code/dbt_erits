@@ -1,3 +1,4 @@
+{{ incremental_config('uuid') }}
 {{ config(
     materialized='table',
     schema='Silver',
@@ -64,7 +65,7 @@ final as (
         dc.*,
         pn.property_names
     from deduped_cadastre dc
-    left join property_names pn using (uuid)
+     left join property_names pn using (uuid)
 )
 
 

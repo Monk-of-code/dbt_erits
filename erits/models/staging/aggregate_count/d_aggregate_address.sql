@@ -1,17 +1,18 @@
+{{ incremental_config('uuid') }}
 {{config(
     schema='Silver',
     materialized='table',
     post_hook=[
-        "CREATE INDEX IF NOT EXISTS idx_d_langata_address_uuid ON {{ this }} (uuid)",
-        "CREATE INDEX IF NOT EXISTS idx_d_langata_address_geom ON {{ this }} USING GIST (geom)",
+        "CREATE INDEX IF NOT EXISTS idx_d_langata_agg_address_uuid ON {{ this }} (uuid)",
+        "CREATE INDEX IF NOT EXISTS idx_d_langata_agg_address_geom ON {{ this }} USING GIST (geom)",
         "ANALYZE {{ this }}"
     ]
 )}}
 
 with addresses as (
 
-    select *
-    from {{ ref('d_langata_address_locations') }}
+    {{ incremental_filter(ref('d_langata_address_locations'), 'id', strategy='merge') }}
+    
 
 ),
 

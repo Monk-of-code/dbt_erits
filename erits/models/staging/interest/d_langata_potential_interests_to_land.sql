@@ -1,16 +1,15 @@
+{{ incremental_config('uuid') }}
+
 {{ config(
     schema='Silver',
-    materialized='table',
     post_hook=[
-        "CREATE INDEX IF NOT EXISTS idx_langata_potential_interests_geom ON {{ this }} USING GIST (geom)",
         "CREATE INDEX IF NOT EXISTS idx_langata_potential_interests_uuid ON {{ this }} (uuid)",
         "ANALYZE {{ this }}"
     ]
 ) }}
 
 WITH cadastre AS (
-    SELECT *
-    FROM {{ ref('d_langata_cp_power_water_bld_permits_add_name')}}
+   {{ incremental_filter(ref("d_langata_add_trade_license_count_to_join_cadastre"),'uuid', strategy='upsert') }}
 ),
 
 land_data AS (
