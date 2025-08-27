@@ -1,7 +1,8 @@
-{{ incremental_config('uuid') }}
+
 {{config(
     schema='Silver',
-    materialized='table',
+    materialized='incremental',
+    unique_key='uuid',
     post_hook=[
         "CREATE INDEX IF NOT EXISTS idx_d_langata_agg_address_uuid ON {{ this }} (uuid)",
         "CREATE INDEX IF NOT EXISTS idx_d_langata_agg_address_geom ON {{ this }} USING GIST (geom)",
@@ -11,7 +12,7 @@
 
 with addresses as (
 
-    {{ incremental_filter(ref('d_langata_address_locations'), 'id', strategy='merge') }}
+    {{ incremental_filter(ref('d_langata_address_cleaned'), 'id', strategy='delete+insert') }}
     
 
 ),
@@ -19,7 +20,7 @@ with addresses as (
 cadastre as (
 
     select uuid, geom
-    from {{ ref('d_langata_cp_cadastral_parcel_uuid') }}
+    from {{ ref('d_langata_cp_cadastral_parcel_uuid_cleaned') }}
 
 ),
 
@@ -47,5 +48,5 @@ aggregated as (
 
 )
 
-select *
+select distinct on (uuid)*
 from aggregated

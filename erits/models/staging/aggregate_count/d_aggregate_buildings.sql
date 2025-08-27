@@ -1,7 +1,8 @@
-{{ incremental_config('uuid') }}
 
 {{config(
     schema='Silver',
+    materialized='incremental',
+    unique_key='uuid',
     post_hook=[
         "CREATE INDEX IF NOT EXISTS idx_d_langata_aggregate_buildings ON {{ this }} (uuid)",
         "CREATE INDEX IF NOT EXISTS idx_d_langata_aggregate_buildings_geom ON {{ this }} USING GIST (geom)",
@@ -10,12 +11,12 @@
 )}}
 
 with buildings as (
-    {{ incremental_filter(ref('d_langata_buildings'), 'id', strategy='merge') }}
+    {{ incremental_filter(ref('d_langata_buildings_cleaned'), 'id', strategy='merge') }}
 ),
 
 cadastre as (
     select uuid, geom
-    from {{ ref('d_langata_cp_cadastral_parcel_uuid') }}
+    from {{ ref('d_langata_cp_cadastral_parcel_uuid_cleaned') }}
 ),
 
 intersections as (

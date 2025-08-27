@@ -1,8 +1,9 @@
 version: 2
 
 sources:
-  - name: bronze_source  # this is a logical name you will use in dbt
-    schema: "Bronze"
+  - name: bronze_source
+    database: erits
+    schema: Bronze
     tables:
       - name: buildings_183
         identifier: 183_buildings

@@ -14,7 +14,7 @@ WITH cadastre AS (
 
 subcounty AS (
     SELECT *
-    FROM {{ ref('d_langata_au_subcounty_unit') }}
+    FROM {{ ref('d_langata_au_subcounty_unit_clean') }}
 ),
 
 joined AS (
@@ -31,5 +31,5 @@ active AS (
     WHERE current_status = 'Active'
 )
 
-SELECT DISTINCT * 
+SELECT DISTINCT on (id)* 
 FROM active

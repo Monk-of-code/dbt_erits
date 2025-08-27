@@ -1,4 +1,4 @@
-{{ incremental_config('uuid') }}
+
 {{ config(
     materialized='table',
     schema='Silver',

@@ -1,7 +1,10 @@
-{{ incremental_config('id') }}
+
+
 
 {{ config(
+    materialized='incremental',
     schema = 'Silver',
+    unique_key= 'id',
     post_hook=[
         "CREATE INDEX IF NOT EXISTS idx_d_langata_address_locations_geom ON {{ this }} USING GIST (geom)",
         "CREATE INDEX IF NOT EXISTS idx_d_langata_address_locations_id ON {{ this }} (id)",
@@ -15,7 +18,7 @@ with addresses as (
 
 subcounty as (
     select *
-    from {{ ref('d_langata_au_subcounty_unit') }}
+    from {{ ref('d_langata_au_subcounty_unit_clean') }}
 ),
 
 joined as (
@@ -26,5 +29,5 @@ joined as (
       on ST_Intersects(a.geom, s.geom)
 )
 
-select * 
+select distinct on (id) * 
 from joined

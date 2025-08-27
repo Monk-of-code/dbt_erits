@@ -1,7 +1,8 @@
-{{ incremental_config('fid') }}
 
 {{ config(
     schema='Silver',
+    materialized='incremental',
+    unique_key= 'fid',
     post_hook=[
         "CREATE INDEX IF NOT EXISTS idx_d_langata_building_permits_geom ON {{ this }} USING GIST (geom)",
         "CREATE INDEX IF NOT EXISTS idx_d_langata_building_permits_fid ON {{ this }} (fid)",
@@ -15,7 +16,7 @@ with permits as (
 
 subcounty as (
     select *
-    from {{ ref('d_langata_au_subcounty_unit') }}
+    from {{ ref('d_langata_au_subcounty_unit_clean') }}
 ),
 
 joined as (
@@ -26,5 +27,5 @@ joined as (
       on ST_Intersects(p.geom, s.geom)
 )
 
-select * 
+select distinct on (fid) * 
 from joined

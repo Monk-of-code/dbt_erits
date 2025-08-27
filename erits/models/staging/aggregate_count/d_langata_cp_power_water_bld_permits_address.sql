@@ -10,32 +10,32 @@
 
 with cadastre as (
     select *
-    from {{ ref('d_langata_cp_cadastral_parcel_uuid') }}
+    from {{ ref('d_langata_cp_cadastral_parcel_uuid_cleaned') }}
 ),
 
 power as (
     select uuid, coalesce(power_count, 0) as power_count
-    from {{ ref('d_aggregate_powermeters') }}
+    from {{ ref('d_aggregate_powermeters_cleaned') }}
 ),
 
 water as (
     select uuid, coalesce(water_count, 0) as water_count
-    from {{ ref('d_aggregate_watermeters') }}
+    from {{ ref('d_aggregate_watermeters_cleaned') }}
 ),
 
 building as (
     select uuid, coalesce(building_count, 0) as building_count
-    from {{ ref('d_aggregate_buildings') }}
+    from {{ ref('d_aggregate_buildings_cleaned') }}
 ),
 
 permit as (
     select uuid, coalesce(permit_count, 0) as permit_count
-    from {{ ref('d_aggregate_developmentcontrol') }}
+    from {{ ref('d_aggregate_developmentcontrol_cleaned') }}
 ),
 
 address as (
     select uuid, coalesce(address_count, 0) as address_count
-    from {{ ref('d_aggregate_address') }}
+    from {{ ref('d_aggregate_address_cleaned') }}
 ),
 
 joined as (

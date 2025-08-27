@@ -1,4 +1,3 @@
-{{ incremental_config('uuid') }}
 
 {{ config(
     schema='Silver',

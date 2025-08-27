@@ -1,7 +1,8 @@
-{{ incremental_config('uuid') }}
 
 {{config(
     schema='Silver',
+    materialized='incremental',
+    unique_key='uuid',
     post_hook=[
         "CREATE INDEX IF NOT EXISTS idx_d_langata_agg_water_meters_uuid ON {{ this }} (uuid)",
         "CREATE INDEX IF NOT EXISTS idx_d_langata_agg_water_meters_geom ON {{ this }} USING GIST (geom)",

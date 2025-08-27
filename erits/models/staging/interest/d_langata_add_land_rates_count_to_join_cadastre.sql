@@ -1,5 +1,5 @@
 {{ config(
-    materialized='table',
+    materialized='incremental',
     schema='Silver',
     post_hook=[
         "CREATE INDEX IF NOT EXISTS idx_landrates_uuid ON {{ this }} (uuid)",
@@ -17,7 +17,7 @@ with cadastre as (
 
 land_rates as (
 
-    select uuid_derived as uuid
+    select property_reference as uuid
     from {{ source('bronze_source', 'bd_land_rate_data') }}
 
 ),

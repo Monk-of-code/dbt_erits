@@ -1,4 +1,4 @@
-{{ incremental_config('uuid') }}
+
 
 {{ config(
     schema = 'gold',

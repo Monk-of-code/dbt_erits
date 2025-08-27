@@ -1,7 +1,8 @@
-{{ incremental_config('fid') }}
 
 {{ config(
     schema = 'Silver',
+    materialized= 'incremental',
+    unique_key= 'fid',
     post_hook=[
         "CREATE INDEX IF NOT EXISTS idx_d_langata_water_meters_nlims_geom ON {{ this }} USING GIST (geom)",
         "CREATE INDEX IF NOT EXISTS idx_d_langata_water_meters_nlims_uuid ON {{ this }} (uuid)",
@@ -10,11 +11,11 @@
 ) }}
 
 with layer as (
-    {{ incremental_filter(ref('d_langata_water_meters'), 'fid', strategy='upsert') }}
+    {{ incremental_filter(ref('d_langata_water_meters_cleaned'), 'fid', strategy='delete+insert') }}
 ),
 
 cadastre as (
-    select uuid, geom from {{ ref('d_langata_cp_cadastral_parcel_uuid') }}
+    select uuid, geom from {{ ref('d_langata_cp_cadastral_parcel_uuid_cleaned') }}
 ),
 
 joined as (
