@@ -1,5 +1,7 @@
 
 target/
 dbt_packages/
-logs/
+logs/*
+!logs/.gitkeep
 dbt_internal_packages/
+.venv/
