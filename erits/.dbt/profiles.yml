@@ -1,0 +1,12 @@
+erits:
+  outputs:
+    dev:
+      dbname: erits
+      host: localhost
+      password : '6590'
+      port: 5433
+      schema: 'Bronze'
+      threads: 1
+      type: postgres
+      user: postgres
+  target: dev
