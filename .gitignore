@@ -3,8 +3,10 @@
 docker-compose.yml
 Dockerfile
 README.md
-requirements.txt
 .gitignore
 dbt_run.json
 .env
 logs/dbt.log
+logs/*
+logs!/gitkeep
+

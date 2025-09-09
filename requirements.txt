@@ -1,0 +1,11 @@
+# Core dbt packages
+dbt-core==1.9.9
+dbt-postgres==1.9.0
+
+# Database driver
+psycopg2-binary>=2.9,<3
+
+# Dependency fixes
+urllib3>=1.26,<2
+requests>=2.32,<3
+six>=1.17
