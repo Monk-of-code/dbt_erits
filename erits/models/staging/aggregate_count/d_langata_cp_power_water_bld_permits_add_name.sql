@@ -36,11 +36,11 @@ classified as (
         uuid,
         propertyna,
         case
-            when levenshtein(lower(propertyna), 'commercial') <= 4 then 'Commercial'
-            when levenshtein(lower(propertyna), 'estate') <= 4 then 'Estate'
-            when levenshtein(lower(propertyna), 'mixed use') <= 4 then 'Mixed Use'
-            when levenshtein(lower(propertyna), 'residential') <= 4 then 'Residential'
-            else initcap(propertyna)
+            when levenshtein(lower(propertyna::text), 'commercial') <= 4 then 'Commercial'
+            when levenshtein(lower(propertyna::text), 'estate') <= 4 then 'Estate'
+            when levenshtein(lower(propertyna::text), 'mixed use') <= 4 then 'Mixed Use'
+            when levenshtein(lower(propertyna::text), 'residential') <= 4 then 'Residential'
+            else initcap(propertyna::text)
         end as clean_propertyna
     from joined
 ),
